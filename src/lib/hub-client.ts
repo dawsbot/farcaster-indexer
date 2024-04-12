@@ -5,19 +5,19 @@ import {
 import { log } from './logger.js'
 
 const HUB_RPC = process.env.HUB_RPC
-const HUB_SSL = process.env.HUB_SSL || 'true'
 
 if (!HUB_RPC) {
   throw new Error('HUB_RPC env variable is not set')
 }
 
-export const hubClient =
-  HUB_SSL === 'true'
-    ? getSSLHubRpcClient(HUB_RPC)
-    : getInsecureHubRpcClient(HUB_RPC)
+// grpc endpoint does not include http nor https
+const HUB_SSL = !HUB_RPC.startsWith('http')
+export const hubClient = HUB_SSL
+  ? getSSLHubRpcClient(HUB_RPC)
+  : getInsecureHubRpcClient(HUB_RPC)
 
 /**
- * Requires that HUB_RPC returns info over grpc
+ * Requires that HUB_RPC returns info
  */
 export const validateHubClient = async (): Promise<void> => {
   const infoResult = await hubClient.getInfo({ dbStats: false })
