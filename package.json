@@ -4,24 +4,14 @@
   "license": "ISC",
   "type": "module",
   "scripts": {
-    "build": "tsc",
     "lint": "eslint . --fix --cache",
-    "clean": "rm -rf ./dist",
     "start": "bun run src/index.ts",
-    "dev": "npm run start",
-    "backfill": "npm run start -- --backfill",
+    "dev": "bun run start",
+    "backfill": "bun run start -- --backfill",
     "kysely:migrate": "bun run src/db/migrator.ts",
-    "test": "concurrently \"npm run lint\" \"npm run build\" \"npm run vitest -- --run\"",
+    "test": "concurrently \"bun run lint\" \"bun run vitest -- --run\"",
     "prepare": "husky install",
     "vitest": "vitest"
-  },
-  "prettier": {
-    "singleQuote": true,
-    "semi": false,
-    "trailingComma": "es5",
-    "plugins": [
-      "prettier-plugin-organize-imports"
-    ]
   },
   "lint-staged": {
     "*": [
@@ -30,7 +20,7 @@
     "*.ts": "eslint --fix"
   },
   "dependencies": {
-    "@farcaster/hub-nodejs": "^0.11.8",
+    "@farcaster/hub-nodejs": "^0.11.9",
     "bottleneck": "^2.19.5",
     "cli-progress": "^3.12.0",
     "dotenv": "^16.4.4",
@@ -43,11 +33,12 @@
     "viem": "^2.9.9"
   },
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/cli-progress": "^3.11.5",
-    "@types/node": "^20.12.4",
     "@types/pg-pool": "^2.0.6",
     "@typescript-eslint/eslint-plugin": "^7.5.0",
     "@typescript-eslint/parser": "^7.5.0",
+    "bun-types": "^1.1.3",
     "concurrently": "^8.2.2",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
@@ -56,8 +47,6 @@
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",
-    "prettier-plugin-organize-imports": "^3.2.4",
-    "typescript": "^5.4.4",
     "vitest": "^1.4.0"
   }
 }

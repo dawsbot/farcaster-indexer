@@ -1,13 +1,8 @@
-import { LatestFidPullsRow } from '../db/db.types.js'
 import { db } from '../db/kysely.js'
-
 import { log } from '../lib/logger.js'
 
 const tableName = 'latest_fid_pulls'
-export async function upsertLatestFidPull(
-  fid: number,
-  updatedAt: Date
-): Promise<void> {
+export async function upsertLatestFidPull(fid: number, updatedAt: Date) {
   try {
     await db.insertInto(tableName).values({ fid, updatedAt }).execute()
 
@@ -17,9 +12,7 @@ export async function upsertLatestFidPull(
   }
 }
 
-export async function selectAllLatestFidPulls(): Promise<
-  ReadonlyArray<Pick<LatestFidPullsRow, 'fid' | 'updatedAt'>>
-> {
+export async function selectAllLatestFidPulls() {
   try {
     const rows = await db
       .selectFrom(tableName)

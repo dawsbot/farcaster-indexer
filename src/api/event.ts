@@ -5,7 +5,7 @@ import { log } from '../lib/logger.js'
  * Insert an event ID in the database
  * @param eventId Hub event ID
  */
-export async function insertEvent(eventId: number): Promise<void> {
+export async function insertEvent(eventId: number) {
   try {
     await db
       .insertInto('events')
@@ -23,7 +23,7 @@ export async function insertEvent(eventId: number): Promise<void> {
  * Get the latest event ID from the database
  * @returns Latest event ID
  */
-export async function getLatestEvent(): Promise<number | undefined> {
+export async function getLatestEvent() {
   try {
     const event = await db
       .selectFrom('events')

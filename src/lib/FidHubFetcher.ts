@@ -11,13 +11,16 @@ import { checkMessages } from './utils.js'
 export class FidHubFetcher {
   #pageSize = 10_000
   #fidRequest: FidRequest
+
   constructor(fid: number) {
     this.#fidRequest = FidRequest.create({ fid })
   }
-  async getAllCastsByFid(): Promise<ReadonlyArray<Message>> {
+
+  async getAllCastsByFid() {
     const casts: Message[] = []
     let nextPageToken: Uint8Array | undefined
 
+    // eslint-disable-next-line no-constant-condition
     while (true) {
       const res = await hubClient.getCastsByFid({
         ...this.#fidRequest,
@@ -38,10 +41,11 @@ export class FidHubFetcher {
     return casts
   }
 
-  async getAllReactionsByFid(): Promise<ReadonlyArray<Message>> {
+  async getAllReactionsByFid() {
     const reactions: Message[] = []
     let nextPageToken: Uint8Array | undefined
 
+    // eslint-disable-next-line no-constant-condition
     while (true) {
       const res = await hubClient.getReactionsByFid({
         ...this.#fidRequest,
@@ -62,19 +66,19 @@ export class FidHubFetcher {
     return reactions
   }
 
-  async getAllLinksByFid(): Promise<ReadonlyArray<Message>> {
+  async getAllLinksByFid() {
     return hubClient
       .getLinksByFid({ ...this.#fidRequest, reverse: true })
       .then((links) => checkMessages(links, this.#fidRequest.fid))
   }
 
-  async getAllUserDataByFid(): Promise<ReadonlyArray<Message>> {
+  async getAllUserDataByFid() {
     return hubClient
       .getUserDataByFid(this.#fidRequest)
       .then((userDatas) => checkMessages(userDatas, this.#fidRequest.fid))
   }
 
-  async getAllVerificationsByFid(): Promise<ReadonlyArray<Message>> {
+  async getAllVerificationsByFid() {
     return hubClient
       .getVerificationsByFid(this.#fidRequest)
       .then((verifications) =>

@@ -2,6 +2,7 @@ import {
   getInsecureHubRpcClient,
   getSSLHubRpcClient,
 } from '@farcaster/hub-nodejs'
+
 import { log } from './logger.js'
 
 const HUB_RPC = process.env.HUB_RPC
@@ -19,7 +20,7 @@ export const hubClient =
 /**
  * Requires that HUB_RPC returns info over grpc
  */
-export const validateHubClient = async (): Promise<void> => {
+export const validateHubClient = async () => {
   const infoResult = await hubClient.getInfo({ dbStats: false })
   if (infoResult.isErr()) {
     const errorMessage = `Error connecting to HUB_RPC. Please check "${HUB_RPC}"`
