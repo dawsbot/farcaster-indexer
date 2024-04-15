@@ -13,7 +13,7 @@ git clone -b hubs https://github.com/gskril/farcaster-indexer.git
 Install dependencies
 
 ```bash
-yarn install
+bun install
 ```
 
 Create a `.env` file with hub and database connection details
@@ -25,13 +25,13 @@ cp .env.example .env
 Run the latest database migrations
 
 ```bash
-yarn kysely:migrate
+bun kysely:migrate
 ```
 
 Run the indexer
 
 ```bash
-yarn start
+bun start
 ```
 
 ## Notes

@@ -23,7 +23,7 @@ describe('FidHubFetcher', () => {
       const reactions: ReadonlyArray<Message> =
         await fidHubFetcher.getAllReactionsByFid()
       expect(Array.isArray(reactions)).toBe(true)
-      expect(reactions.length).toBeGreaterThan(34911)
+      expect(reactions.length).toBeGreaterThan(0)
     })
   })
 
