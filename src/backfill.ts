@@ -87,30 +87,32 @@ export async function backfill({
  */
 async function getFullProfileFromHub(fid: number) {
   const fidHubFetcher = new FidHubFetcher(fid)
+
+  const addToBatch = async <T>(
+    items: T[],
+    addFunction: (item: T) => Promise<void>
+  ) => {
+    return Promise.all(items.map((item) => addFunction(item)))
+  }
+
   return Promise.all([
-    fidHubFetcher.getAllCastsByFid().then((casts) => {
-      return Promise.all(casts.map((cast) => castAddBatcher.add(cast)))
-    }),
-    fidHubFetcher.getAllReactionsByFid().then((reactions) => {
-      return Promise.all(
-        reactions.map((reaction) => reactionAddBatcher.add(reaction))
-      )
-    }),
-    fidHubFetcher.getAllLinksByFid().then((links) => {
-      return Promise.all(links.map((link) => linkAddBatcher.add(link)))
-    }),
-    fidHubFetcher.getAllUserDataByFid().then((userDatas) => {
-      return Promise.all(
-        userDatas.map((userData) => userDataAddBatcher.add(userData))
-      )
-    }),
-    fidHubFetcher.getAllVerificationsByFid().then((verifications) => {
-      return Promise.all(
-        verifications.map((verification) =>
-          verificationAddBatcher.add(verification)
-        )
-      )
-    }),
+    fidHubFetcher
+      .getAllCastsByFid()
+      .then((casts) => addToBatch(casts, castAddBatcher.add)),
+    fidHubFetcher
+      .getAllReactionsByFid()
+      .then((reactions) => addToBatch(reactions, reactionAddBatcher.add)),
+    fidHubFetcher
+      .getAllLinksByFid()
+      .then((links) => addToBatch(links, linkAddBatcher.add)),
+    fidHubFetcher
+      .getAllUserDataByFid()
+      .then((userDatas) => addToBatch(userDatas, userDataAddBatcher.add)),
+    fidHubFetcher
+      .getAllVerificationsByFid()
+      .then((verifications) =>
+        addToBatch(verifications, verificationAddBatcher.add)
+      ),
   ])
 }
 
