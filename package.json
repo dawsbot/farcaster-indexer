@@ -7,10 +7,10 @@
     "build": "tsc",
     "lint": "eslint . --fix --cache",
     "clean": "rm -rf ./dist",
-    "start": "bun run src/index.ts",
-    "dev": "npm run start",
-    "backfill": "npm run start -- --backfill",
-    "kysely:migrate": "bun run src/db/migrator.ts",
+    "start": "tsc && node ./dist/index.js",
+    "dev": "tsc && node ./dist/index.js",
+    "backfill": "tsc && node ./dist/index.js --backfill",
+    "kysely:migrate": "tsc && node ./dist/db/migrator.js",
     "test": "concurrently \"npm run lint\" \"npm run build\" \"npm run vitest -- --run\"",
     "prepare": "husky install",
     "vitest": "vitest"
@@ -57,7 +57,7 @@
     "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",
     "prettier-plugin-organize-imports": "^3.2.4",
-    "typescript": "^5.4.4",
+    "typescript": "^5.4.5",
     "vitest": "^1.4.0"
   }
 }
