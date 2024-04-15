@@ -4,10 +4,7 @@ import { db } from '../db/kysely.js'
 import { log } from '../lib/logger.js'
 
 const tableName = 'latest_fid_pulls'
-export async function upsertLatestFidPull(
-  fid: number,
-  updatedAt: Date
-): Promise<void> {
+export async function upsertLatestFidPull(fid: number, updatedAt: Date) {
   try {
     await db.insertInto(tableName).values({ fid, updatedAt }).execute()
 

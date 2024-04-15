@@ -34,7 +34,7 @@ const threeDaysAgo = new Date(new Date().getTime() - 3 * 24 * 60 * 60 * 1000)
 export async function backfill({
   minFid = 1,
   maxFid = Number.MAX_SAFE_INTEGER,
-}: FidRange = {}): Promise<void> {
+}: FidRange = {}) {
   // Save the current event ID so we can start from there after backfilling
   await saveCurrentEventId()
 
